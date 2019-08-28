@@ -3,6 +3,7 @@ package com.hyc.userabbitmq.mq.producer;
 import com.hyc.userabbitmq.enums.MessageStatusEnum;
 import com.hyc.userabbitmq.mapper.OrderMessageMapper;
 import com.hyc.userabbitmq.model.Order;
+import com.hyc.userabbitmq.mq.config.OrderMQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -55,6 +56,6 @@ public class OrderMessageSender {
         rabbitTemplate.setReturnCallback(returnCallback);
         CorrelationData correlationData = new CorrelationData(order.getMessageId());
         logger.info("send order message:{}", order);
-        rabbitTemplate.convertAndSend("exchange.order", "order", order, correlationData);
+        rabbitTemplate.convertAndSend(OrderMQ.ORDER_EXCHANGE_NAME, "order."+order.getMessageId(), order, correlationData);
     }
 }

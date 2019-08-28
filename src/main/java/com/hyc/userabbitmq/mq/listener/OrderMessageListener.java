@@ -1,6 +1,7 @@
 package com.hyc.userabbitmq.mq.listener;
 
 import com.hyc.userabbitmq.model.Order;
+import com.hyc.userabbitmq.mq.config.OrderMQ;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +19,12 @@ public class OrderMessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderMessageListener.class);
 
-    @RabbitHandler
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "order", durable = "true"),
-            exchange = @Exchange(value = "exchange.order", type = "topic", durable = "true"),
-            key = "order*"
-    ))
+//    @RabbitListener(bindings = {@QueueBinding(
+//            value = @Queue(value = "order", durable = "true"),
+//            exchange = @Exchange(value = "exchange.order", type = "topic"),
+//            key = "order.#"
+//    )})
+    @RabbitListener(queues = OrderMQ.ORDER_QUEUE_NAME)
     public void receiveOrderMessage(@Payload Order order, @Headers Map<String,Object> headers, Channel channel) throws IOException {
         //消费者操作
         logger.info("---------收到消息，开始消费---------");
