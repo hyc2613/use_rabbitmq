@@ -12,6 +12,7 @@ import com.hyc.userabbitmq.util.DateUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class OrderService {
     @Autowired
     private OrderMessageSender orderMessageSender;
 
+    @Transactional(rollbackFor = Exception.class)
     public void save(Order order) {
         orderMapper.insert(order);
         Date now = new Date();
@@ -36,9 +38,9 @@ public class OrderService {
         orderMessage.setCreateTime(now);
         orderMessage.setUpdateTime(now);
         orderMessage.setNextRetryTime(DateUtil.nextSendMessageTime());
-        orderMessage.setStatusWithEnum(MessageStatusEnum.SENDING);
+        orderMessage.setStatus(MessageStatusEnum.SENDING);
         orderMessage.setRetryTimes(0);
-        orderMessageMapper.insert(orderMessage);
+        orderMessageMapper.insertOrder(orderMessage);
         // 往消息队列发送一条消息
         orderMessageSender.sendMessage(order);
     }

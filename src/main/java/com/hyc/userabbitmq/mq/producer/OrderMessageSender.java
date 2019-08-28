@@ -29,6 +29,7 @@ public class OrderMessageSender {
         public void confirm(CorrelationData correlationData, boolean ack, String cause) {
             String messageId = correlationData.getId();
             if (ack) {
+                logger.info("messageId:{} confirm success", messageId);
                 // confirm成功，表示消息已经发送到exchange，但是不代表消费端已经接收。
                 orderMessageMapper.updateSendStatus(messageId, MessageStatusEnum.SUCCESS, new Date());
             }
@@ -53,6 +54,7 @@ public class OrderMessageSender {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
         CorrelationData correlationData = new CorrelationData(order.getMessageId());
-        rabbitTemplate.convertAndSend("exchange-order", "order", order, correlationData);
+        logger.info("send order message:{}", order);
+        rabbitTemplate.convertAndSend("exchange.order", "order", order, correlationData);
     }
 }

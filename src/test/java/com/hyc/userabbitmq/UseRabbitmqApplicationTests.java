@@ -11,6 +11,8 @@ public class UseRabbitmqApplicationTests {
 
     @Test
     public void contextLoads() {
+
+
     }
 
 }

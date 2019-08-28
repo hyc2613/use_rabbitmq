@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface OrderMessageMapper {
 
-    void insert(OrderMessage orderMessage);
+    void insertOrder(OrderMessage orderMessage);
 
     void updateSendStatus(String messageId, MessageStatusEnum messageStatusEnum, Date updateTime);
 

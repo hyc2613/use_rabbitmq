@@ -1,6 +1,6 @@
 package com.hyc.userabbitmq.enums;
 
-public enum MessageStatusEnum {
+public enum MessageStatusEnum implements BaseEnum {
     /**
      * 发送中
      */

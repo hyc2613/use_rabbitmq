@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="retry_times" property="retryTimes" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INT" typeHandler="com.hyc.userabbitmq.enums.MessageStatusTypeHandler" />
+    <result column="status" property="status" typeHandler="com.hyc.userabbitmq.enums.MessageStatusTypeHandler" />
     <result column="next_retry_time" property="nextRetryTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -21,7 +21,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <insert id="insert" parameterType="com.hyc.userabbitmq.model.OrderMessage" >
+  <insert id="insertOrder" parameterType="com.hyc.userabbitmq.model.OrderMessage" >
     insert into order_message (id, message, retry_times,
       status, next_retry_time, create_time,
       update_time)

@@ -14,12 +14,7 @@ public class OrderMessage {
     private Integer retryTimes;
     private Date createTime;
     private Date updateTime;
-    private Integer status;
+    private MessageStatusEnum status;
     private Date nextRetryTime;
-
-    public void setStatusWithEnum(MessageStatusEnum messageStatusEnum) {
-        Assert.notNull(messageStatusEnum, "枚举不能为null");
-        setStatus(messageStatusEnum.getValue());
-    }
 
 }
