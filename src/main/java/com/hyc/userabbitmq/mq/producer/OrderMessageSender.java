@@ -52,10 +52,14 @@ public class OrderMessageSender {
     };
 
     public void sendMessage(Order order) {
+        sendMessage(order, OrderMQ.ORDER_EXCHANGE_NAME, "order."+order.getMessageId());
+    }
+
+    public void sendMessage(Order order, String exchangeName, String routingKey) {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
         CorrelationData correlationData = new CorrelationData(order.getMessageId());
         logger.info("send order message:{}", order);
-        rabbitTemplate.convertAndSend(OrderMQ.ORDER_EXCHANGE_NAME, "order."+order.getMessageId(), order, correlationData);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, order, correlationData);
     }
 }
