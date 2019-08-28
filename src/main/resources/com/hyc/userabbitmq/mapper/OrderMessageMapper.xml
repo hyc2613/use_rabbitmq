@@ -35,7 +35,7 @@
               from order_message bml
               where status = '0'
         <![CDATA[
-              and next_retry <= sysdate()
+              and next_retry_time <= sysdate()
         ]]>
     </select>
 
@@ -43,14 +43,14 @@
     update order_message bml
     set bml.re_try_times = bml.re_try_times + 1,
       bml.update_time = #{updateTime, jdbcType=TIMESTAMP}
-    where bml.id = #{id,jdbcType=VARCHAR}
+    where bml.id = #{messageId,jdbcType=VARCHAR}
   </update>
 
   <update id="updateSendStatus" >
     update order_message bml
-    set bml.status = #{status,typeHandler=com.hyc.userabbitmq.enums.MessageStatusTypeHandler},
+    set bml.status = #{messageStatusEnum,typeHandler=com.hyc.userabbitmq.enums.MessageStatusTypeHandler},
           bml.update_time = #{updateTime, jdbcType=TIMESTAMP}
-    where bml.id = #{id,jdbcType=VARCHAR}
+    where bml.id = #{messageId,jdbcType=VARCHAR}
   </update>
 
 </mapper>
