@@ -23,9 +23,6 @@
     <typeAliases>
         <package name="com.hyc.userabbitmq.model"/>
     </typeAliases>
-    <typeHandlers>
-        <typeHandler handler="com.hyc.userabbitmq.enums.MessageStatusTypeHandler" javaType="com.hyc.userabbitmq.enums.MessageStatusEnum"/>
-    </typeHandlers>
     <mappers>
         <mapper resource="com/hyc/userabbitmq/mapper/OrderMessageMapper.xml"/>
     </mappers>

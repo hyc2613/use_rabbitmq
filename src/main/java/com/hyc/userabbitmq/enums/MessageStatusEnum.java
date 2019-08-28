@@ -24,13 +24,4 @@ public enum MessageStatusEnum implements BaseEnum {
     public Integer getValue() {
         return value;
     }
-
-    public static MessageStatusEnum valueOf(int value) {
-        for (MessageStatusEnum messageStatusEnum : MessageStatusEnum.values()) {
-            if (messageStatusEnum.getValue() == value) {
-                return messageStatusEnum;
-            }
-        }
-        return null;
-    }
 }
