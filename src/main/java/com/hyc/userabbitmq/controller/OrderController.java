@@ -19,7 +19,7 @@ import java.util.UUID;
 public class OrderController {
     private Order generateOrder() {
         Order order = new Order();
-        order.setId(new Random().nextInt());
+        order.setId(new Random().nextInt(Integer.MAX_VALUE));
         order.setName("orderName:"+order.getId());
         order.setMessageId(UUID.randomUUID().toString());
         return order;
