@@ -39,7 +39,7 @@ public class OrderMessageListener {
 
         //ACK,确认一条消息已经被消费
         channel.basicAck(deliveryTag, false);
-        // nack 或 reject，requeue=false，则消息进入死信队列
+        // nack 或 reject并且requeue=false，则消息进入死信队列
 //        channel.basicNack(deliveryTag, false, false);
 //        channel.basicReject(deliveryTag, false);
     }

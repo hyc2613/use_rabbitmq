@@ -21,7 +21,7 @@ public class OrderServiceTest {
     @Test
     public void save() {
         Order order = new Order();
-        order.setId(1L);
+        order.setId(1);
         order.setMessageId(UUID.randomUUID().toString());
         order.setName("订单1");
         orderService.save(order);

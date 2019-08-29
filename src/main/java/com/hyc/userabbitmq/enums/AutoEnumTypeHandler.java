@@ -3,6 +3,8 @@ package com.hyc.userabbitmq.enums;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -18,39 +20,35 @@ public class AutoEnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
     private BaseTypeHandler<E> defaultTypeHandler;
 
-    public AutoEnumTypeHandler(Class<E> eClass) {
+    public AutoEnumTypeHandler(@NotNull Class<E> eClass) {
         if (eClass == null) {
-            throw new IllegalArgumentException("枚举类型不能为null");
+            throw new IllegalArgumentException();
         }
-
         if (BaseEnum.class.isAssignableFrom(eClass)) {
-            // 如果是BaseEnum的实现类，就用自定义的MessageStatusTypeHandler
-            defaultTypeHandler = new MessageStatusTypeHandler();
+            defaultTypeHandler = new MessageStatusTypeHandler(eClass);
         }
         else {
-            // 默认的枚举转换类用的是 EnumTypeHandler，我们这里指定为EnumOrdinalTypeHandler
             defaultTypeHandler = new EnumOrdinalTypeHandler(eClass);
         }
-
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement preparedStatement, int i, E e, JdbcType jdbcType) throws SQLException {
-        defaultTypeHandler.setNonNullParameter(preparedStatement, i, e, jdbcType);
+    public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
+        defaultTypeHandler.setNonNullParameter(ps, i, parameter, jdbcType);
     }
 
     @Override
-    public E getNullableResult(ResultSet resultSet, String s) throws SQLException {
-        return defaultTypeHandler.getNullableResult(resultSet, s);
+    public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
+        return defaultTypeHandler.getNullableResult(rs, columnName);
     }
 
     @Override
-    public E getNullableResult(ResultSet resultSet, int i) throws SQLException {
-        return defaultTypeHandler.getNullableResult(resultSet, i);
+    public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+        return defaultTypeHandler.getNullableResult(rs, columnIndex);
     }
 
     @Override
-    public E getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
-        return defaultTypeHandler.getNullableResult(callableStatement, i);
+    public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+        return defaultTypeHandler.getNullableResult(cs, columnIndex);
     }
 }
