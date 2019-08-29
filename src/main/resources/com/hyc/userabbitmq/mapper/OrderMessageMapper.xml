@@ -48,7 +48,7 @@
 
   <update id="update4ReSend" parameterMap="orderMessageParameterMap" >
     update order_message bml
-    set bml.re_try_times = bml.re_try_times + 1,
+    set bml.retry_times = bml.retry_times + 1,
       bml.update_time = #{updateTime}
     where bml.id = #{id}
   </update>
