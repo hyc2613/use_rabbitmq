@@ -38,9 +38,9 @@ public class OrderMessageListener {
         Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
 
         //ACK,确认一条消息已经被消费
-        channel.basicAck(deliveryTag, false);
+//        channel.basicAck(deliveryTag, false);
         // nack 或 reject并且requeue=false，则消息进入死信队列
-//        channel.basicNack(deliveryTag, false, false);
+        channel.basicNack(deliveryTag, false, false);
 //        channel.basicReject(deliveryTag, false);
     }
 

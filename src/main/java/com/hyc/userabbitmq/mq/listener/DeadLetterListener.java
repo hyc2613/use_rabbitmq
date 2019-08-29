@@ -14,15 +14,13 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-//
 @Component
 @RabbitListener(queues = OrderMQ.DEAD_QUEUE_NAME)
 public class DeadLetterListener {
 
     private static final Logger logger = LoggerFactory.getLogger(DeadLetterListener.class);
 
-
-    @RabbitHandler(isDefault = true)
+    @RabbitHandler
     public void dealDeadLetter(Channel channel, Message message, @Payload Order order) throws IOException {
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         Order order1 = (Order) SerializationUtils.deserialize(message.getBody());
